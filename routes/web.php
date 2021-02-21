@@ -17,5 +17,5 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/printing', 'PrintController@index');
-Route::post('/print', 'PrintController@printFile');
+Route::get('/printing', 'App\Http\Controllers\PrintController@index');
+Route::post('/print', 'App\Http\Controllers\PrintController@printFile');
