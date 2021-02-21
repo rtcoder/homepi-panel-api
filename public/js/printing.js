@@ -1,6 +1,6 @@
 const filesToPrint = [];
-const uploadFiles = [];
-const requests = [];
+let uploadFiles = {};
+let requests = {};
 const typesWithPages = [
   "application/msword",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -36,6 +36,8 @@ function handleChange(event) {
     }
 
     reader.onload = (e) => {
+      const uniqueIndex = `_${getRandomString()}`;
+
       filesToPrint.push({
         file,
         b64: btoa(reader.result),
@@ -43,8 +45,16 @@ function handleChange(event) {
         targetResult: e.target.result,
         copies: 1,
         pages: "",
-        uniqueIndex: `_${getRandomString()}`
+        uniqueIndex
       });
+
+      for (const fileToPrint of filesToPrint) {
+        uploadFiles[fileToPrint.uniqueIndex] = {
+          loaded: 0,
+          total: fileToPrint.file.size,
+        };
+      }
+
 
       renderFilesRows();
     };
@@ -71,8 +81,8 @@ function updatePages(event, index) {
 }
 
 function deleteFile(index) {
-  if (filfilesToPrintes[index]) {
-    filfilesToPrintes.splice(index, 1);
+  if (filesToPrint[index]) {
+    filesToPrint.splice(index, 1);
   }
   renderFilesRows();
 }
@@ -107,7 +117,6 @@ function renderFilesRows() {
       <tr data-index-file="${file.uniqueIndex}">
         <td class="name">
         <div>
-          <progress-ring stroke="2" radius="15" progress="0" color="#09c" fill="#ccc"></progress-ring>
           <p title="${file.file.name}">${file.file.name}</p>
         </div>
         </td>
@@ -135,6 +144,10 @@ function renderFilesRows() {
 }
 
 function runUpload() {
+  requests = {};
+
+  document.querySelector('label').style.display = 'none';
+
   for (const file of filesToPrint) {
     const index = file.uniqueIndex;
 
@@ -154,12 +167,44 @@ function runUpload() {
 }
 
 function updateUploadRow(event, index) {
-  const { loaded, total } = event;
+  const { loaded } = event;
+
+  uploadFiles[index].loaded = loaded;
+
+  updateProgress();
+}
+
+function updateProgress() {
+  const { loaded, total } = getFullProgressData();
 
   const progress = ((loaded * 100) / total).toFixed(0);
 
-  const el = document.querySelector(`#files-table tr[data-index-file="${index}"] progress-ring`);
+  const el = document.querySelector(`progress-ring`);
+
+  console.log({ progress, loaded, total })
+  if (progress === '100') {
+
+    console.log('tutaj')
+    setTimeout(() => {
+      console.log('tutaj w settimeout')
+      document.querySelector('label').style.display = 'flex';
+    }, 1000);
+  }
 
   el.setAttribute('progress', progress);
+}
 
+function getFullProgressData() {
+  let total = 0;
+  let loaded = 0;
+
+  Object.keys(uploadFiles).forEach(key => {
+    total += uploadFiles[key].total;
+    loaded += uploadFiles[key].loaded;
+  });
+
+  return {
+    total,
+    loaded
+  }
 }

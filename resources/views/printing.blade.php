@@ -15,6 +15,15 @@
         application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*" />
         <p>Kliknij aby dodać pliki do drukowania</p>
       </label>
+      <progress-ring 
+          stroke="10"
+          radius="150"
+          progress="0"
+          color="#09c" 
+          fill="#fff"
+          with-text="1"
+          font-size="30px"
+      ></progress-ring>
 
       <table id="files-table">
         <thead>

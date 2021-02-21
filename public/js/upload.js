@@ -52,6 +52,8 @@ function upload(url, file, body = null, listeners = {}) {
 
   const data = new FormData();
   data.append('file', file);
+  const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  data.append('_token', token);
 
   if (body) {
     Object.keys(body).forEach(key => {

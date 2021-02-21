@@ -17,9 +17,17 @@ class PrintController extends Controller
     {
         if($file = $request->file('file')){
             $name = $file->getPathname();
-            shell_exec("lp " . $name);
-            return response(['sdf'=>'ff', $request->all(),$name]);
+            $pages=$request->get('pages');
+            $copies=(int)$request->get('copies');
 
+            $command = 'lp '.
+            ($copies > 1 ? ('-n '.$copies.' ') : '').
+            (strlen($pages) ? ('-P '.$pages.' ') : '').
+            $name;
+
+            shell_exec($command);
+            return response();
         }
+        return response(null, 400);
     }
 }

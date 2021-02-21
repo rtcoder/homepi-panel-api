@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
+Route::get('/ini', function () {
+    phpinfo();
+});
 
 Route::get('/printing', 'App\Http\Controllers\PrintController@index');
 Route::post('/print', 'App\Http\Controllers\PrintController@printFile');

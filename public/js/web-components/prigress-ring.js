@@ -4,7 +4,7 @@ class ProgressRing extends HTMLElement {
     const stroke = this.getAttribute('stroke');
     const radius = this.getAttribute('radius');
     const withText = +this.getAttribute('with-text');
-    console.log(withText)
+    const fontSize = this.getAttribute('font-size') || '12px';
     const color = this.getAttribute('color') || 'black';
     const fill = this.getAttribute('fill') || 'transparent';
     const normalizedRadius = radius - stroke * 2;
@@ -32,7 +32,7 @@ class ProgressRing extends HTMLElement {
            y="${radius}"
            text-anchor="middle"
            stroke="${color}" 
-           font-size="12px"
+           font-size="${fontSize}"
            dy=".3em">0%</text>`
         : ''
       }

@@ -10,7 +10,6 @@
   flex-direction: column;
   margin: 5px;
   cursor: pointer;
-  text-decoration: none;
 }
 
 .tile .name {
