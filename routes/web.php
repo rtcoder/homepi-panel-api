@@ -14,5 +14,12 @@
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    return view('index');
 });
+
+$router->get('/key', function() {
+    return \Illuminate\Support\Str::random(32);
+});
+
+$router->get('/printing', 'PrintController@index');
+$router->post('/print', 'PrintController@printFile');
