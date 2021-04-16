@@ -12,3 +12,16 @@ body {
 a {
   text-decoration: none;
 }
+
+.go-back {
+  color: #09c;
+  height: 30px;
+  display: flex;
+  width: 70px;
+  justify-content: center;
+  align-items: center;
+}
+
+.go-back::before {
+  content: '<';
+}

@@ -20,13 +20,6 @@
       <div class="name">Albumer</div>
     </a>
 
-    <div class="tile">
-      <div class="image">
-        <img src="img/weather.png" alt="" />
-      </div>
-      <div class="name">Pogoda</div>
-    </div>
-
     <a href="/printing">
       <div class="tile">
         <div class="image">
